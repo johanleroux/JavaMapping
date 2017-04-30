@@ -30,7 +30,7 @@ public class ArrayListIterator<T> implements Iterator<T> {
 	 * ****************************
 	 */
 	public boolean hasNext() {
-		return (this.list.size() > cursor + 1) ? true : false;
+		return (this.list.size() > cursor) ? true : false;
 	}
 
 	@Override
@@ -39,12 +39,13 @@ public class ArrayListIterator<T> implements Iterator<T> {
 	 * ********** 3 marks ****************************
 	 */
 	public T next() {
+		T temp = null;
 		if (this.hasNext()) {
+			temp = this.list.get(cursor);
 			this.cursor++;
-			return this.list.get(cursor);
 		}
 
-		return null;
+		return temp;
 	}
 
 	@Override

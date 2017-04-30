@@ -8,20 +8,20 @@ public class MapPanel extends JPanel {
 	private static final long serialVersionUID = 3483335523000181440L;
 
 	public void paintComponent(Graphics g) {
-		System.out.println("PAINTING");
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, 720, 720);
-		g.setColor(Color.BLACK);
 
-		if (!Global.nodes.isEmpty()) {
-			// Loop through render list
-			for (Vertex node : Global.nodes) {
-				// System.out.println(node.coordinate.getLat());
-				// System.out.println(node + " -> " + node.coordinate.getLon() +
-				// " | " + node.coordinate.getLat());
-				g.drawOval((int) Math.abs(node.coordinate.getLon()), (int) Math.abs(node.coordinate.getLat()), 3, 3);
-			}
+		// Loop through nodes
+		if (Global.nodes != null && !Global.nodes.isEmpty())
+			g.setColor(Color.BLACK);
 
+		for (Vertex node : Global.nodes)
+			g.fillOval((int) Math.abs(node.coordinate.getLon()) - 1, (int) Math.abs(node.coordinate.getLat()) - 1, 3,
+					3);
+
+		// Loop through roads
+		if (Global.roads != null && !Global.roads.isEmpty()) {
+			g.setColor(Color.BLACK);
 			for (Edge edge : Global.roads) {
 				int sourceX = (int) edge.getSource().coordinate.getLon();
 				int sourceY = (int) edge.getSource().coordinate.getLat();
@@ -30,24 +30,36 @@ public class MapPanel extends JPanel {
 
 				g.drawLine(sourceX, sourceY, destinationX, destinationY);
 			}
+		}
 
+		// Loop through path
+
+		if (Global.path != null && !Global.path.isEmpty()) {
+			System.out.println("Path count " + Global.path.size());
 			g.setColor(Color.RED);
+			Vertex prev = Global.path.get(0);
+			for (Vertex node : Global.path) {
+				int sourceX = (int) prev.coordinate.getLon();
+				int sourceY = (int) prev.coordinate.getLat();
+				int destinationX = (int) node.coordinate.getLon();
+				int destinationY = (int) node.coordinate.getLat();
 
-			if (Global.path != null && Global.path.size() > 0) {
-				Vertex prev = Global.path.getFirst();
-				for (Vertex node : Global.path) {
-					int sourceX = (int) prev.coordinate.getLon();
-					int sourceY = (int) prev.coordinate.getLat();
-					int destinationX = (int) node.coordinate.getLon();
-					int destinationY = (int) node.coordinate.getLat();
+				g.drawOval((int) node.coordinate.getLon() - 1, (int) node.coordinate.getLat() - 1, 3, 3);
 
-					g.drawOval((int) node.coordinate.getLon(), (int) node.coordinate.getLat(), 3, 3);
+				g.drawLine(sourceX, sourceY, destinationX, destinationY);
 
-					g.drawLine(sourceX, sourceY, destinationX, destinationY);
-
-					prev = node;
-				}
+				prev = node;
 			}
+		}
+
+		// Set Source and Target Destination
+		if (!Global.nodes.isEmpty()) {
+			g.setColor(Color.GREEN);
+			Vertex source = Global.nodes.get(Global.source);
+			g.fillOval((int) source.coordinate.getLon() - 5, (int) source.coordinate.getLat() - 5, 10, 10);
+			g.setColor(Color.BLUE);
+			Vertex target = Global.nodes.get(Global.target);
+			g.fillOval((int) target.coordinate.getLon() - 5, (int) target.coordinate.getLat() - 5, 10, 10);
 		}
 	}
 }

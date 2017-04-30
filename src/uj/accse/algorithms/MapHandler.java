@@ -1,4 +1,4 @@
-package uj.acsse.map;
+package uj.accse.algorithms;
 
 import java.io.*;
 import javax.xml.parsers.*;
@@ -10,10 +10,10 @@ import uj.accse.structures.Edge;
 import uj.accse.structures.Global;
 import uj.accse.structures.Graph;
 import uj.accse.structures.Vertex;
-import uj.acsse.algorithms.Dijkstra;
 
 public class MapHandler extends DefaultHandler {
 	private Integer prevNode;
+	private long time;
 
 	public MapHandler(ArrayList<Vertex> nodes, ArrayList<Edge> roads) {
 		this.prevNode = null;
@@ -53,9 +53,11 @@ public class MapHandler extends DefaultHandler {
 	}
 
 	public void parseDocument(String mapFile) {
+		time = System.currentTimeMillis();
 		System.out.println("Parsing map: " + mapFile);
 		Global.nodes.clear();
 		Global.roads.clear();
+		Global.path.clear();
 
 		Global.latMax = Integer.MIN_VALUE;
 		Global.latMin = Integer.MAX_VALUE;
@@ -76,17 +78,10 @@ public class MapHandler extends DefaultHandler {
 	}
 
 	public void endDocument() {
-		System.out.println("Map Parsed");
+		long benchmark = System.currentTimeMillis() - time;
+		System.out.println("Map Parsed in " + benchmark + "ms");
 		System.out.println("# of Nodes: " + Global.nodes.size());
 		System.out.println("# of Roads: " + Global.roads.size());
-		System.out.println("===================================================");
-		System.out.println("Dikstra");
-		Graph graph = new Graph(Global.nodes, Global.roads);
-		// System.out.println(graph.getVertexes().size());
-		// System.out.println(graph.getEdges().size());
-		Dijkstra dijkstra = new Dijkstra(graph);
-		dijkstra.execute(Global.nodes.get(0));
-		Global.path = dijkstra.getPath(Global.nodes.get(10));
 		System.out.println("===================================================");
 	}
 
@@ -120,5 +115,17 @@ public class MapHandler extends DefaultHandler {
 		}
 
 		prevNode = curNode;
+	}
+
+	public void processNavigation() {
+		System.out.println("Dikstra");
+		Graph graph = new Graph(Global.nodes, Global.roads);
+
+//		System.out.println("Source: " + Global.source);
+//		System.out.println("Target: " + Global.target);
+		Dijkstra dijkstra = new Dijkstra(graph, Global.nodes.get(Global.source), Global.nodes.get(Global.target));
+		dijkstra = null;
+		System.out.println("Path " + Global.path.size());
+		System.out.println("===================================================");
 	}
 }

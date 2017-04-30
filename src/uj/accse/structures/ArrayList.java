@@ -69,13 +69,29 @@ public class ArrayList<T> implements List<T>, Iterable<T> {
 
 	@Override
 	public T remove(Integer i) {
-		T temp = array[i];
-		if (!this.isEmpty() && i < size)
-			for (int r = i; r < size; r++)
-				this.array[r] = this.array[r + 1];
+		if (i < 0 || i >= size)
+			throw new IndexOutOfBoundsException("Index out of bounds.");
 
-		this.size--;
-		return temp;
+		T remove = array[i];
+
+		T[] temp = createArray(length);
+
+		// if (!this.isEmpty()) {
+		// if (i < size) {
+		// for (int r = i; r < size; r++)
+		// this.array[r] = this.array[r + 1];
+		// this.size--;
+		// }
+		// }
+		for (int x = 0, j = 0; x < size; x++) {
+			if (x != i) {
+				temp[j++] = array[x];
+			}
+		}
+		array = temp;
+		size--;
+
+		return remove;
 	}
 
 	@Override
@@ -85,7 +101,12 @@ public class ArrayList<T> implements List<T>, Iterable<T> {
 
 	@Override
 	public void set(Integer i, T e) {
-		array[i] = e;
+		try {
+			array[i] = e;
+		} catch (Exception ex) {
+			System.out.println(size + "/" + length);
+			System.out.println("Pos " + i + " element: " + e);
+		}
 	}
 
 	@Override

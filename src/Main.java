@@ -6,6 +6,20 @@ import uj.accse.structures.*;
 public class Main {
 
 	public static void main(String[] args) {
+		// ArrayList<String> list = new ArrayList<String>();
+		// for (int i = 0; i < 100; i++)
+		// list.add("" + i);
+		// System.out.println(list);
+		// System.out.println("ArrayList size -> " + list.size());
+		// int remove = 0;
+		//
+		// System.out.println("Removing index #" + remove);
+		// list.remove(remove);
+		// System.out.println();
+		//
+		// System.out.println(list);
+		// System.out.println("ArrayList size -> " + list.size());
+		// System.exit(1);
 		// Set Default Global Variables
 		new Global();
 
