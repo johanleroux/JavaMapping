@@ -2,7 +2,14 @@ package uj.accse.structures;
 
 import java.util.Iterator;
 
-public class ArrayList<T> implements List<T>, Iterable<T> {
+/**
+ * ArrayList Data Structure Implementation
+ * 
+ * @author Johan le Roux (201577296)
+ *
+ * @param <T>
+ */
+public class ArrayList<T> implements Iterable<T> {
 
 	private T[] array;
 	private Integer size;
@@ -26,6 +33,11 @@ public class ArrayList<T> implements List<T>, Iterable<T> {
 		this.size = 0;
 	}
 
+	/**
+	 * Clone ArrayList
+	 * 
+	 * @param old
+	 */
 	public ArrayList(ArrayList<T> old) {
 		this(old.length);
 		this.size = old.size;
@@ -33,11 +45,20 @@ public class ArrayList<T> implements List<T>, Iterable<T> {
 
 	}
 
+	/**
+	 * Create Array Helper
+	 * 
+	 * @param length
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	private T[] createArray(int length) {
 		return (T[]) new Object[length];
 	}
 
+	/**
+	 * Ensure Array is the Correct Length Otherwise Increase Size by Doubling
+	 */
 	private void ensureLength() {
 		if (size < length)
 			return;
@@ -50,13 +71,22 @@ public class ArrayList<T> implements List<T>, Iterable<T> {
 		array = temp;
 	}
 
+	/**
+	 * Add Element to End of Array
+	 * 
+	 * @param e
+	 */
 	public void add(T e) {
 		add(size, e);
 	}
 
-	@Override
+	/**
+	 * Add Element to Position i
+	 * 
+	 * @param i
+	 * @param e
+	 */
 	public void add(Integer i, T e) {
-
 		ensureLength();
 
 		if (!this.isEmpty() && i < size)
@@ -67,7 +97,12 @@ public class ArrayList<T> implements List<T>, Iterable<T> {
 		this.set(i, e);
 	}
 
-	@Override
+	/**
+	 * Remove Element to Position i
+	 * 
+	 * @param i
+	 * @return
+	 */
 	public T remove(Integer i) {
 		if (i < 0 || i >= size)
 			throw new IndexOutOfBoundsException("Index out of bounds.");
@@ -76,30 +111,32 @@ public class ArrayList<T> implements List<T>, Iterable<T> {
 
 		T[] temp = createArray(length);
 
-		// if (!this.isEmpty()) {
-		// if (i < size) {
-		// for (int r = i; r < size; r++)
-		// this.array[r] = this.array[r + 1];
-		// this.size--;
-		// }
-		// }
-		for (int x = 0, j = 0; x < size; x++) {
-			if (x != i) {
+		for (int x = 0, j = 0; x < size; x++)
+			if (x != i)
 				temp[j++] = array[x];
-			}
-		}
+
 		array = temp;
 		size--;
 
 		return remove;
 	}
 
-	@Override
+	/**
+	 * Return Element at Position i
+	 * 
+	 * @param i
+	 * @return
+	 */
 	public T get(Integer i) {
 		return array[i];
 	}
 
-	@Override
+	/**
+	 * Set Element to Array at Position i
+	 * 
+	 * @param i
+	 * @param e
+	 */
 	public void set(Integer i, T e) {
 		try {
 			array[i] = e;
@@ -109,15 +146,27 @@ public class ArrayList<T> implements List<T>, Iterable<T> {
 		}
 	}
 
-	@Override
+	/**
+	 * Return Size of Array
+	 * 
+	 * @return
+	 */
 	public Integer size() {
 		return size;
 	}
 
+	/**
+	 * Check Whether Array is Empty
+	 * 
+	 * @return
+	 */
 	public boolean isEmpty() {
 		return size == 0;
 	}
 
+	/**
+	 * ArrayList toString Override
+	 */
 	public String toString() {
 		String str = "[";
 
@@ -133,6 +182,12 @@ public class ArrayList<T> implements List<T>, Iterable<T> {
 		return str;
 	}
 
+	/**
+	 * Return Index of Element e
+	 * 
+	 * @param e
+	 * @return
+	 */
 	public int indexOf(T e) {
 		for (int i = 0; i < size; i++) {
 
@@ -146,6 +201,12 @@ public class ArrayList<T> implements List<T>, Iterable<T> {
 		return -1;
 	}
 
+	/**
+	 * Return Last Index of Element e
+	 * 
+	 * @param e
+	 * @return
+	 */
 	public int lastIndexOf(T e) {
 		for (int i = size; i >= 0; i--) {
 			if (e.equals(array[i]))
@@ -155,15 +216,27 @@ public class ArrayList<T> implements List<T>, Iterable<T> {
 		return -1;
 	}
 
+	/**
+	 * Check if ArrayList Contains Element e
+	 * 
+	 * @param e
+	 * @return
+	 */
 	public boolean contains(T e) {
 		return indexOf(e) > 0 ? true : false;
 	}
 
+	/**
+	 * ArrayList Iterator
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Iterator<T> iterator() {
 		return new ArrayListIterator(this);
 	}
 
+	/**
+	 * Clear ArrayList
+	 */
 	public void clear() {
 		this.length = 1;
 		this.array = createArray(this.length);

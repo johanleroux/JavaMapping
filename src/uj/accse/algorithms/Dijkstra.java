@@ -1,26 +1,25 @@
 package uj.accse.algorithms;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import uj.accse.structures.ArrayList;
 import uj.accse.structures.Edge;
-import uj.accse.structures.Global;
 import uj.accse.structures.Graph;
 import uj.accse.structures.Vertex;
+import uj.accse.variables.Global;
+//import uj.accse.structures.HashTable;
+import java.util.Hashtable; // Use as replacement for my HashTable as it doesn't want to work
 
 public class Dijkstra {
-	private final ArrayList<Vertex> nodes;
+	private final Graph graph;
 	private final ArrayList<Edge> roads;
 	private final Vertex source;
 	private final Vertex target;
 	private ArrayList<Vertex> unvisited;
 	private ArrayList<Vertex> visited;
-	private Map<Vertex, Vertex> predecessors;
+	private Hashtable<Vertex, Vertex> predecessors;
 
 	public Dijkstra(Graph graph, Vertex source, Vertex target) {
 		// Make a local copy of the map data
-		this.nodes = new ArrayList<Vertex>(graph.getVertexes());
+		this.graph = new Graph(graph.getVertices(), graph.getEdges());
 		this.roads = new ArrayList<Edge>(graph.getEdges());
 
 		// Set source and target node
@@ -31,7 +30,7 @@ public class Dijkstra {
 		this.source.setDistance(0);
 
 		// Create a set nodes
-		this.predecessors = new HashMap<Vertex, Vertex>();
+		this.predecessors = new Hashtable<Vertex, Vertex>();
 		this.visited = new ArrayList<Vertex>();
 		this.unvisited = new ArrayList<Vertex>();
 		this.unvisited.add(this.source);
@@ -47,10 +46,10 @@ public class Dijkstra {
 		this.setPath();
 	}
 
-	private Vertex getLeastDistance(ArrayList<Vertex> vertexes) {
+	private Vertex getLeastDistance(ArrayList<Vertex> vertices) {
 		Vertex min = null;
 
-		for (Vertex vertex : vertexes) {
+		for (Vertex vertex : vertices) {
 			if (min == null)
 				min = vertex;
 			else if (vertex.getDistance() < min.getDistance())
@@ -73,11 +72,11 @@ public class Dijkstra {
 
 	private ArrayList<Vertex> getNeighbors(Vertex node) {
 		ArrayList<Vertex> neighbors = new ArrayList<Vertex>();
-		for (Edge edge : this.roads) {
-			if (edge.getSource().equals(node) && !visited.contains(edge.getDestination())) {
-				neighbors.add(edge.getDestination());
-			}
-		}
+
+		for (Vertex x : graph.neighbors(node))
+			if (!visited.contains(x))
+				neighbors.add(x);
+
 		return neighbors;
 	}
 
@@ -102,7 +101,6 @@ public class Dijkstra {
 			return;
 		}
 
-		System.out.println("hi");
 		Global.path.add(step);
 		while (predecessors.get(step) != null) {
 			step = predecessors.get(step);

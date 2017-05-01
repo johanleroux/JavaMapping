@@ -7,19 +7,32 @@ import org.xml.sax.helpers.*;
 
 import uj.accse.structures.ArrayList;
 import uj.accse.structures.Edge;
-import uj.accse.structures.Global;
 import uj.accse.structures.Graph;
 import uj.accse.structures.Vertex;
+import uj.accse.variables.Global;
 
+/**
+ * MapHandler for parsing OSM data
+ * 
+ * @author Johan le Roux (201577296)
+ */
 public class MapHandler extends DefaultHandler {
 	private Integer prevNode;
 	private long time;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param nodes
+	 * @param roads
+	 */
 	public MapHandler(ArrayList<Vertex> nodes, ArrayList<Edge> roads) {
 		this.prevNode = null;
 	}
 
-	@Override
+	/**
+	 * Parser finding start of element
+	 */
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		switch (qName) {
 		case "node":
@@ -39,7 +52,9 @@ public class MapHandler extends DefaultHandler {
 		}
 	}
 
-	@Override
+	/**
+	 * Parsing finding end of element
+	 */
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		switch (qName) {
 		case "node":
@@ -52,6 +67,11 @@ public class MapHandler extends DefaultHandler {
 		}
 	}
 
+	/**
+	 * Parse document
+	 * 
+	 * @param mapFile
+	 */
 	public void parseDocument(String mapFile) {
 		time = System.currentTimeMillis();
 		System.out.println("Parsing map: " + mapFile);
@@ -77,6 +97,9 @@ public class MapHandler extends DefaultHandler {
 		}
 	}
 
+	/**
+	 * End Parsing Document
+	 */
 	public void endDocument() {
 		long benchmark = System.currentTimeMillis() - time;
 		System.out.println("Map Parsed in " + benchmark + "ms");
@@ -107,6 +130,11 @@ public class MapHandler extends DefaultHandler {
 		Global.nodes.add(node);
 	}
 
+	/**
+	 * Process way points
+	 * 
+	 * @param attributes
+	 */
 	private void processWay(Attributes attributes) {
 		Integer curNode = Global.nodes.indexOf(new Vertex(attributes.getValue("ref")));
 		if (prevNode != null && prevNode != -1 && curNode != -1) {
@@ -117,15 +145,17 @@ public class MapHandler extends DefaultHandler {
 		prevNode = curNode;
 	}
 
+	/**
+	 * Process Navigation
+	 */
 	public void processNavigation() {
-		System.out.println("Dikstra");
+		System.out.println("Processing Navigation using Dikstra");
 		Graph graph = new Graph(Global.nodes, Global.roads);
 
-//		System.out.println("Source: " + Global.source);
-//		System.out.println("Target: " + Global.target);
-		Dijkstra dijkstra = new Dijkstra(graph, Global.nodes.get(Global.source), Global.nodes.get(Global.target));
-		dijkstra = null;
-		System.out.println("Path " + Global.path.size());
+		// System.out.println("Source: " + Global.source);
+		// System.out.println("Target: " + Global.target);
+		new Dijkstra(graph, Global.nodes.get(Global.source), Global.nodes.get(Global.target));
+		System.out.println("Path Route Count: " + Global.path.size());
 		System.out.println("===================================================");
 	}
 }

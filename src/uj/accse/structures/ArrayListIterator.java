@@ -3,19 +3,20 @@ package uj.accse.structures;
 import java.util.Iterator;
 
 /**
- * An iterator over a ArrayList. This will return the Item that is contained in
- * the list
+ * ArrayList Iterator Implementation
  * 
+ * @author Johan le Roux (201577296)
+ *
+ * @param <T>
  */
 public class ArrayListIterator<T> implements Iterator<T> {
 	private ArrayList<T> list;
 	private int cursor;
 
 	/**
-	 * The constructor
+	 * Constructor
 	 * 
 	 * @param list
-	 *            the list to iterate over
 	 */
 	public ArrayListIterator(ArrayList<T> list) {
 		this.list = list;
@@ -26,8 +27,7 @@ public class ArrayListIterator<T> implements Iterator<T> {
 
 	@Override
 	/**
-	 * Returns true if there next() will return an element ********** 2 marks
-	 * ****************************
+	 * Return if there is a next element
 	 */
 	public boolean hasNext() {
 		return (this.list.size() > cursor) ? true : false;
@@ -35,8 +35,7 @@ public class ArrayListIterator<T> implements Iterator<T> {
 
 	@Override
 	/**
-	 * Return the "next" item in the list and then advance the cursor.
-	 * ********** 3 marks ****************************
+	 * Return next element
 	 */
 	public T next() {
 		T temp = null;
@@ -49,10 +48,6 @@ public class ArrayListIterator<T> implements Iterator<T> {
 	}
 
 	@Override
-	/**
-	 * Should be used to remove the item from the list, but for now we do not
-	 * include an implementation.
-	 */
 	public void remove() {
 		// do nothing - keep java happy
 	}

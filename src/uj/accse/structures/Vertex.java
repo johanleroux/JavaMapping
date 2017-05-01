@@ -1,5 +1,11 @@
 package uj.accse.structures;
 
+/**
+ * Vertex Data Structure Implementation
+ * 
+ * @author Johan le Roux (201577296)
+ *
+ */
 public class Vertex {
 
 	private String label;
@@ -7,6 +13,11 @@ public class Vertex {
 	private double distance;
 	private Vertex prev;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param label
+	 */
 	public Vertex(String label) {
 		this.label = label;
 		this.coordinate = new Coordinate();

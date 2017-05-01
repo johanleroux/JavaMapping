@@ -6,7 +6,7 @@ package uj.accse.structures;
  * connects. The model will also contain a couple of attributes defining the
  * roads estimated speed, congestion level, etc.
  * 
- * @author johan le roux
+ * @author Johan le Roux (201577296)
  */
 public class Edge {
 
@@ -36,14 +36,29 @@ public class Edge {
 		this.weight = 1;
 	}
 
+	/**
+	 * Return Source Vertex
+	 * 
+	 * @return
+	 */
 	public Vertex getSource() {
 		return source;
 	}
 
+	/**
+	 * Return Destination Vertex
+	 * 
+	 * @return
+	 */
 	public Vertex getDestination() {
 		return destination;
 	}
 
+	/**
+	 * Return Weight
+	 * 
+	 * @return
+	 */
 	public int getWeight() {
 		return (int) this.weight;
 	}

@@ -2,11 +2,22 @@ package uj.accse.gui;
 
 import java.awt.*;
 import javax.swing.*;
-import uj.accse.structures.*;
 
+import uj.accse.structures.*;
+import uj.accse.variables.Global;
+
+/**
+ * MapPanel for Displaying Map
+ * 
+ * @author Johan le Roux (201577296)
+ *
+ */
 public class MapPanel extends JPanel {
 	private static final long serialVersionUID = 3483335523000181440L;
 
+	/**
+	 * PaintComponent
+	 */
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, 720, 720);
@@ -32,10 +43,8 @@ public class MapPanel extends JPanel {
 			}
 		}
 
-		// Loop through path
-
+		// Loop through path (navigation route)
 		if (Global.path != null && !Global.path.isEmpty()) {
-			System.out.println("Path count " + Global.path.size());
 			g.setColor(Color.RED);
 			Vertex prev = Global.path.get(0);
 			for (Vertex node : Global.path) {

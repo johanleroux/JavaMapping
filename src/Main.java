@@ -2,24 +2,11 @@ import java.awt.*;
 import javax.swing.*;
 import uj.accse.gui.*;
 import uj.accse.structures.*;
+import uj.accse.variables.Global;
 
 public class Main {
 
 	public static void main(String[] args) {
-		// ArrayList<String> list = new ArrayList<String>();
-		// for (int i = 0; i < 100; i++)
-		// list.add("" + i);
-		// System.out.println(list);
-		// System.out.println("ArrayList size -> " + list.size());
-		// int remove = 0;
-		//
-		// System.out.println("Removing index #" + remove);
-		// list.remove(remove);
-		// System.out.println();
-		//
-		// System.out.println(list);
-		// System.out.println("ArrayList size -> " + list.size());
-		// System.exit(1);
 		// Set Default Global Variables
 		new Global();
 
@@ -41,12 +28,11 @@ public class Main {
 		frame.add(ui, BorderLayout.LINE_END);
 
 		// Setting UI Frame
-		frame.setSize(1000, 720);
+		frame.setSize(Global.screenWidth, Global.screenHeight);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setResizable(false);
-
 	}
 
 }
